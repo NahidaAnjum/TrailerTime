@@ -13,7 +13,7 @@ let trailers = [
       id: 2, 
       name: "The Dark Knight", 
       url: "https://www.youtube.com/watch?v=EXeTwQWrcwY",
-      poster: "https://m.media-amazon.com/images/I/71p8G+LkP-L._AC_SY679_.jpg"
+      poster: "https://image.tmdb.org/t/p/original/qJ2tW6WMUDux911r6m7haRef0WH.jpg"
     }
   ];
 
