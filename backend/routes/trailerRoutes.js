@@ -3,9 +3,19 @@ const router = express.Router();
 
 // Dummy trailers data
 let trailers = [
-  { id: 1, name: "Inception", url: "https://www.youtube.com/watch?v=YoHD9XEInc0" },
-  { id: 2, name: "The Dark Knight", url: "https://www.youtube.com/watch?v=EXeTwQWrcwY" }
-];
+    { 
+      id: 1, 
+      name: "Inception", 
+      url: "https://www.youtube.com/watch?v=YoHD9XEInc0",
+      poster: "https://image.tmdb.org/t/p/original/xlaY2zyzMfkhk0HSC5VUwzoZPU1.jpg"
+    },
+    { 
+      id: 2, 
+      name: "The Dark Knight", 
+      url: "https://www.youtube.com/watch?v=EXeTwQWrcwY",
+      poster: "https://m.media-amazon.com/images/I/71p8G+LkP-L._AC_SY679_.jpg"
+    }
+  ];
 
 // Get all trailers
 router.get('/', (req, res) => {
