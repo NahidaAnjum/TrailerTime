@@ -21,39 +21,51 @@ const TrailerList = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading trailers...</div>;
+    return <div style={{ color: 'white', textAlign: 'center', marginTop: '50px' }}>Loading trailers...</div>;
   }
 
   return (
     <div style={{
       fontFamily: 'Poppins, sans-serif',
-      backgroundColor: '#f0f2f5',
+      backgroundColor: '#121212',
       minHeight: '100vh',
       padding: '20px'
     }}>
-      <h1 style={{ textAlign: 'center', color: '#333' }}>
+      <h1 style={{ textAlign: 'center', color: '#ffffff' }}>
         Movie Trailers <span role="img" aria-label="movie camera">🎥</span>
       </h1>
-      <ul style={{ display: 'flex', flexWrap: 'wrap', listStyle: 'none', padding: 0, justifyContent: 'center' }}>
-        {trailers.map(trailer => (
-          <li key={trailer.id} style={{
-            margin: '20px',
-            width: '220px',
-            textAlign: 'center',
-            backgroundColor: '#fff',
-            borderRadius: '10px',
-            boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-            transition: 'transform 0.3s, box-shadow 0.3s',
-            overflow: 'hidden'
-          }}
-          onMouseEnter={e => {
-            e.currentTarget.style.transform = 'scale(1.05)';
-            e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,0,0,0.2)';
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
-          }}
+      <ul style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        listStyle: 'none',
+        padding: 0,
+        justifyContent: 'center'
+      }}>
+        {trailers.map((trailer, index) => (
+          <li
+            key={trailer.id}
+            style={{
+              margin: '20px',
+              width: '200px',
+              textAlign: 'center',
+              backgroundColor: '#1f1f1f',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+              overflow: 'hidden',
+              opacity: 0,
+              animation: `fadeIn 0.8s ease forwards`,
+              animationDelay: `${index * 0.15}s`,
+              transform: 'translateY(20px)',
+              transition: 'transform 0.3s, box-shadow 0.3s',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.05)';
+              e.currentTarget.style.boxShadow = '0 8px 20px rgba(255,255,255,0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.5)';
+            }}
           >
             <img
               src={trailer.poster}
@@ -62,12 +74,12 @@ const TrailerList = () => {
               onError={(e) => { e.target.src = 'https://via.placeholder.com/200x300?text=No+Image'; }}
             />
             <div style={{ padding: '10px' }}>
-              <h2 style={{ fontSize: '18px', margin: '10px 0', color: '#222' }}>{trailer.name}</h2>
+              <h2 style={{ fontSize: '16px', margin: '10px 0', color: '#ffffff' }}>{trailer.name}</h2>
               <a
                 href={trailer.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ textDecoration: 'none', color: '#007bff' }}
+                style={{ textDecoration: 'none', color: '#1DB954' }}
               >
                 <span role="img" aria-label="clapper board">🎬</span> Watch Trailer
               </a>
@@ -75,6 +87,17 @@ const TrailerList = () => {
           </li>
         ))}
       </ul>
+
+      <style>
+        {`
+          @keyframes fadeIn {
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+        `}
+      </style>
     </div>
   );
 };
