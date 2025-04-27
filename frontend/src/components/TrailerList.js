@@ -33,15 +33,13 @@ const TrailerList = () => {
       padding: '20px',
       color: 'white'
     }}>
-      {/* Main App Title */}
       <h1 style={{ textAlign: 'center', color: '#ffffff', fontSize: '40px', fontWeight: 'bold' }}>
-        TrailerTime <span role="img" aria-label="movie camera">🎥</span>
+        TrailerTime 🎥
       </h1>
 
       {/* TOP PICKS CAROUSEL */}
       <TopPicks trailers={trailers} />
 
-      {/* All Movies Grid Title */}
       <h2 style={{ color: '#fff', marginTop: '40px', marginBottom: '20px', fontSize: '28px', textAlign: 'center' }}>
         All Movies
       </h2>
@@ -66,14 +64,6 @@ const TrailerList = () => {
             transition: 'transform 0.3s ease, box-shadow 0.3s ease',
             overflow: 'hidden',
           }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.05)';
-              e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,0,0,0.3)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
-            }}
           >
             <img
               src={trailer.poster}
