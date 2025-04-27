@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import TopPicks from './TopPicks';  // Import TopPicks component
 
 const TrailerList = () => {
   const [trailers, setTrailers] = useState([]);
@@ -29,11 +30,23 @@ const TrailerList = () => {
       fontFamily: 'Poppins, sans-serif',
       backgroundColor: '#121212',
       minHeight: '100vh',
-      padding: '20px'
+      padding: '20px',
+      color: 'white'
     }}>
-      <h1 style={{ textAlign: 'center', color: '#ffffff' }}>
-        Movie Trailers <span role="img" aria-label="movie camera">🎥</span>
+      {/* Main App Title */}
+      <h1 style={{ textAlign: 'center', color: '#ffffff', fontSize: '40px', fontWeight: 'bold' }}>
+        TrailerTime <span role="img" aria-label="movie camera">🎥</span>
       </h1>
+
+      {/* TOP PICKS CAROUSEL */}
+      <TopPicks trailers={trailers} />
+
+      {/* All Movies Grid Title */}
+      <h2 style={{ color: '#fff', marginTop: '40px', marginBottom: '20px', fontSize: '28px', textAlign: 'center' }}>
+        All Movies
+      </h2>
+
+      {/* Movies Grid */}
       <ul style={{
         display: 'flex',
         flexWrap: 'wrap',
@@ -41,63 +54,59 @@ const TrailerList = () => {
         padding: 0,
         justifyContent: 'center'
       }}>
-        {trailers.map((trailer, index) => (
-          <li
-            key={trailer.id}
-            style={{
-              margin: '20px',
-              width: '200px',
-              textAlign: 'center',
-              backgroundColor: '#1f1f1f',
-              borderRadius: '12px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
-              overflow: 'hidden',
-              opacity: 0,
-              animation: `fadeIn 0.8s ease forwards`,
-              animationDelay: `${index * 0.15}s`,
-              transform: 'translateY(20px)',
-              transition: 'transform 0.3s, box-shadow 0.3s',
-            }}
+        {trailers.map(trailer => (
+          <li key={trailer.id} style={{
+            margin: '20px',
+            width: '200px',
+            textAlign: 'center',
+            backgroundColor: '#1e1e1e',
+            borderRadius: '10px',
+            padding: '10px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+            overflow: 'hidden',
+          }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'scale(1.05)';
-              e.currentTarget.style.boxShadow = '0 8px 20px rgba(255,255,255,0.1)';
+              e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,0,0,0.3)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.5)';
+              e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
             }}
           >
             <img
               src={trailer.poster}
               alt={trailer.name}
-              style={{ width: '100%', height: '300px', objectFit: 'cover' }}
+              style={{
+                width: '100%',
+                height: '300px',
+                borderRadius: '10px',
+                objectFit: 'cover',
+                marginBottom: '10px',
+                transition: 'transform 0.3s ease',
+              }}
               onError={(e) => { e.target.src = 'https://via.placeholder.com/200x300?text=No+Image'; }}
             />
-            <div style={{ padding: '10px' }}>
-              <h2 style={{ fontSize: '16px', margin: '10px 0', color: '#ffffff' }}>{trailer.name}</h2>
-              <a
-                href={trailer.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ textDecoration: 'none', color: '#1DB954' }}
-              >
-                <span role="img" aria-label="clapper board">🎬</span> Watch Trailer
-              </a>
-            </div>
+            <h3 style={{ fontSize: '18px', color: '#fff', fontWeight: 'bold' }}>{trailer.name}</h3>
+            <a
+              href={trailer.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                textDecoration: 'none',
+                color: '#03a9f4',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                marginTop: '10px',
+                display: 'inline-block',
+              }}
+            >
+              🎬 Watch Trailer
+            </a>
           </li>
         ))}
       </ul>
-
-      <style>
-        {`
-          @keyframes fadeIn {
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-        `}
-      </style>
     </div>
   );
 };
