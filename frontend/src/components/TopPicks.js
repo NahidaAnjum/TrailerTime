@@ -26,14 +26,18 @@ const TopPicks = () => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,          // Show 3 posters at a time
-    slidesToScroll: 2,
-    arrows: true,             // Show arrows
-    autoplay: true,           // Auto move ON
-    autoplaySpeed: 2000,      // Move every 2 seconds
-    centerMode: true,         // Center the poster
-    centerPadding: '0px',     // No padding
-    pauseOnHover: true,       // Pause when mouse hover
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    arrows: true,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    centerMode: true,
+    centerPadding: '0px',
+    pauseOnHover: true,
+  };
+
+  const handlePosterClick = (url) => {
+    window.open(url, '_blank'); // open trailer link in a new tab
   };
 
   return (
@@ -44,23 +48,22 @@ const TopPicks = () => {
     }}>
       <Slider {...settings} ref={sliderRef}>
         {topPicks.map((movie) => (
-          <div key={movie.id} style={{ padding: '0 10px' }}>
-            <a href={movie.url} target="_blank" rel="noopener noreferrer">
-              <img
-                src={movie.poster}
-                alt={movie.name}
-                style={{
-                  width: '100%',
-                  height: '400px',
-                  objectFit: 'fill',
-                  borderRadius: '10px',
-                  transition: 'transform 0.3s ease',
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                onError={(e) => { e.target.src = 'https://via.placeholder.com/300x450?text=No+Image'; }}
-              />
-            </a>
+          <div key={movie.id} style={{ padding: '0 10px', cursor: 'pointer' }}>
+            <img
+              src={movie.poster}
+              alt={movie.name}
+              onClick={() => handlePosterClick(movie.url)}
+              style={{
+                width: '100%',
+                height: '500px',
+                objectFit: 'fill',
+                borderRadius: '20px',
+                transition: 'transform 0.3s ease',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+              onError={(e) => { e.target.src = 'https://via.placeholder.com/300x450?text=No+Image'; }}
+            />
           </div>
         ))}
       </Slider>
