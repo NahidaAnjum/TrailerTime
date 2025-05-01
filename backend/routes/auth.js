@@ -16,20 +16,20 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign(
       { id: user.id, username: user.username, role: user.role },
       'your_jwt_secret',
-      { expiresIn: '1h' }
+      { expiresIn: '24h' } // Extended session
     );
 
     res.cookie('token', token, { 
       httpOnly: true,
-      sameSite: 'none', // Changed from 'strict' for cross-origin support
-      secure: true,     // Required for sameSite: none
-      maxAge: 3600000   // 1 hour in milliseconds
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 86400000 // 24 hours
     });
     
     res.json({ 
       username: user.username, 
       role: user.role,
-      message: 'Login successful' 
+      id: user.id
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -39,27 +39,35 @@ router.post('/login', async (req, res) => {
 // Logout
 router.post('/logout', (req, res) => {
   res.clearCookie('token', {
-    sameSite: 'none',
-    secure: true
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production'
   });
   res.json({ message: 'Logged out successfully' });
 });
 
-// Auth check endpoint
+// Auth check
 router.get('/check', async (req, res) => {
   try {
     const token = req.cookies.token;
     if (!token) return res.status(401).json({ isAuthenticated: false });
 
     const decoded = jwt.verify(token, 'your_jwt_secret');
+    
+    // Verify user still exists
+    const user = await User.findByPk(decoded.id);
+    if (!user) {
+      res.clearCookie('token');
+      return res.status(401).json({ isAuthenticated: false });
+    }
+
     res.json({
       isAuthenticated: true,
-      username: decoded.username,
-      role: decoded.role,
-      id: decoded.id
+      username: user.username,
+      role: user.role,
+      id: user.id
     });
   } catch (err) {
-    res.clearCookie('token'); // Clear invalid token
+    res.clearCookie('token');
     res.status(401).json({ isAuthenticated: false });
   }
 });
