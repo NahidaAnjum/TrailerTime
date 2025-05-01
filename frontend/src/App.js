@@ -1,20 +1,18 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AuthProvider from './context/AuthContext';  // Import AuthProvider
-import Login from './components/Login';
-import TrailerList from './components/TrailerList';
+import { BrowserRouter } from 'react-router-dom';
+import AppRoutes from './Routes';
+import { AuthProvider } from './contexts/AuthContext';
+import './styles/main.css';
 
-const App = () => {
+function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/trailers" element={<TrailerList />} />
-        </Routes>
-      </Router>
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <div className="app-container">
+          <AppRoutes />
+        </div>
+      </AuthProvider>
+    </BrowserRouter>
   );
-};
+}
 
 export default App;

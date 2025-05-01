@@ -1,4 +1,3 @@
-// backend/routes/auth.js
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
@@ -22,8 +21,11 @@ router.post('/login', async (req, res) => {
 
     res.cookie('token', token, { 
       httpOnly: true,
-      sameSite: 'strict'
+      sameSite: 'none', // Changed from 'strict' for cross-origin support
+      secure: true,     // Required for sameSite: none
+      maxAge: 3600000   // 1 hour in milliseconds
     });
+    
     res.json({ 
       username: user.username, 
       role: user.role,
@@ -36,8 +38,30 @@ router.post('/login', async (req, res) => {
 
 // Logout
 router.post('/logout', (req, res) => {
-  res.clearCookie('token');
+  res.clearCookie('token', {
+    sameSite: 'none',
+    secure: true
+  });
   res.json({ message: 'Logged out successfully' });
+});
+
+// Auth check endpoint
+router.get('/check', async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) return res.status(401).json({ isAuthenticated: false });
+
+    const decoded = jwt.verify(token, 'your_jwt_secret');
+    res.json({
+      isAuthenticated: true,
+      username: decoded.username,
+      role: decoded.role,
+      id: decoded.id
+    });
+  } catch (err) {
+    res.clearCookie('token'); // Clear invalid token
+    res.status(401).json({ isAuthenticated: false });
+  }
 });
 
 module.exports = router;
