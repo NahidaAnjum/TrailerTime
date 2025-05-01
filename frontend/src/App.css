@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 1rem;
+}
