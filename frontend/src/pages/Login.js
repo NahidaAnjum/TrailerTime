@@ -53,8 +53,8 @@ export default function Login() {
         <p>Test Accounts:</p>
         <ul>
           <li>Admin: admin/2025DEVChallenge</li>
-          <li>Editor: newuser/2025DEVChallenge</li>
-          <li>Viewer: viewer/2025DEVChallenge</li>
+          <li>Editor: editor/2025DEVChallenge</li>
+          <li>Viewer: user/2025DEVChallenge</li>
         </ul>
       </div>
     </div>

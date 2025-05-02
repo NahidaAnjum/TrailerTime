@@ -60,12 +60,12 @@ sequelize.sync({ force: true }).then(async () => {
         role: 'admin'
       },
       {
-        username: 'newuser',
+        username: 'editor',
         password: '2025DEVChallenge',
         role: 'editor'
       },
       {
-        username: 'viewer',
+        username: 'user',
         password: '2025DEVChallenge',
         role: 'viewer'
       }
