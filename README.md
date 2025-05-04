@@ -148,6 +148,8 @@ npm start
 Open your browser at [http://localhost:3000] and enjoy 🎬
 
 ---
+## 📺 Demo Video
+> Watch the demo on [Loom](https://www.loom.com/share/83c0f91d2ca94e52b908abfda24b555f?sid=25b726e4-e21e-40ce-a4a7-a0185555c470)
 
 ## 🖼️ Screenshots
 
