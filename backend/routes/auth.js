@@ -2,37 +2,39 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+require('dotenv').config(); // Load environment variables
+const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret"
 
 // Login
 router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
-    
+
     const user = await User.findOne({ where: { username } });
     if (!user || !user.validPassword(password)) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     const token = jwt.sign(
-      { id: user.id, username: user.username, role: user.role },
-      'your_jwt_secret',
-      { expiresIn: '24h' } // Extended session
+        { id: user.id, username: user.username, role: user.role },
+        JWT_SECRET, // Use environment variable for secret
+        { expiresIn: '24h' } // Extended session
     );
 
-    res.cookie('token', token, { 
+    res.cookie('token', token, {
       httpOnly: true,
       sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',
       maxAge: 86400000 // 24 hours
     });
-    
-    res.json({ 
-      username: user.username, 
+
+    res.json({
+      username: user.username,
       role: user.role,
       id: user.id
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -51,8 +53,8 @@ router.get('/check', async (req, res) => {
     const token = req.cookies.token;
     if (!token) return res.status(401).json({ isAuthenticated: false });
 
-    const decoded = jwt.verify(token, 'your_jwt_secret');
-    
+    const decoded = jwt.verify(token, JWT_SECRET); // Use environment variable for secret
+
     // Verify user still exists
     const user = await User.findByPk(decoded.id);
     if (!user) {

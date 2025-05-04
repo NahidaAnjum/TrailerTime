@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
+const { checkPermission } = require('../middleware/permit');
 const {
   getAllTrailers,
   getTrailerById,
@@ -14,8 +15,8 @@ router.get('/', getAllTrailers);
 router.get('/:id', getTrailerById);
 
 // Protected routes
-router.post('/', auth(['admin', 'editor']), createTrailer);
-router.put('/:id', auth(['admin', 'editor']), updateTrailer);
-router.delete('/:id', auth(['admin']), deleteTrailer);
+router.post('/', auth, checkPermission('create', 'trailer'), createTrailer);
+router.put('/:id', auth, checkPermission('edit', 'trailer'), updateTrailer);
+router.delete('/:id', auth, checkPermission('delete', 'trailer'), deleteTrailer);
 
 module.exports = router;
