@@ -1,7 +1,8 @@
 const { Permit } = require('permitio');
 const permit = new Permit({
     pdp: 'https://cloudpdp.api.permit.io',
-    token: 'permit_key_1aByezlaAI9wmei3pZaOFVjZXZucdDSIIWS6Qq3rGG75SYWdkg6SpVz6AwoYDIhUfOD1ImEVsbwN7clCHYbIHJ',
+    token: process.env.PERMIT_KEY,
+    
 });
 const checkPermission = (action, resource) => async (req, res, next) => {
     try {
