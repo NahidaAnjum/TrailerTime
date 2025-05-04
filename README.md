@@ -13,6 +13,7 @@ Welcome to **TrailerTime** — a Netflix-style web app built just for showcasing
 - [🔐 Authorization with Permit.io](#-authorization-with-permitio)
 - [💻 Installation](#-installation)
 - [🚀 Running the Application Locally](#-running-the-application-locally)
+- [📺 Demo Video](#-demo-video)
 - [🖼️ Screenshots](#-screenshots)
 - [📈 Future Improvements](#-future-improvements)
 - [🤝 Contributing](#-contributing)
