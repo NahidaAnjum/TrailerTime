@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AuthContext from '../contexts/AuthContext';
+import '../styles/Login.css';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -10,7 +11,6 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Redirect if already logged in
   useEffect(() => {
     if (user) {
       navigate(location.state?.from || '/', { replace: true });
@@ -21,7 +21,6 @@ export default function Login() {
     e.preventDefault();
     try {
       await login(username, password);
-      // Navigate to previous location or home
       navigate(location.state?.from || '/', { replace: true });
     } catch (err) {
       setError(err.toString());
@@ -29,34 +28,41 @@ export default function Login() {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      {error && <div className="error-message">{error}</div>}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
-      <div className="test-credentials">
-        <p>Test Accounts:</p>
-        <ul>
-          <li>Admin: admin/2025DEVChallenge</li>
-          <li>Editor: editor/2025DEVChallenge</li>
-          <li>Viewer: user/2025DEVChallenge</li>
-        </ul>
+      <div className="login-wrapper">
+        <div className="login-card">
+          <h2 className="login-title">Login to Your Account</h2>
+
+          {error && <div className="error-message">{error}</div>}
+
+          <form onSubmit={handleSubmit} className="login-form">
+            <input
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+            />
+
+            <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+            />
+
+            <button type="submit">Login</button>
+          </form>
+
+          <div className="test-credentials">
+            <p>Test Accounts:</p>
+            <ul>
+              <li><strong>Admin:</strong> admin / 2025DEVChallenge</li>
+              <li><strong>Editor:</strong> editor / 2025DEVChallenge</li>
+              <li><strong>Viewer:</strong> user / 2025DEVChallenge</li>
+            </ul>
+          </div>
+        </div>
       </div>
-    </div>
   );
 }
