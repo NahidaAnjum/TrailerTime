@@ -46,7 +46,7 @@ export default function AddTrailerModal({ onClose, onAdd }) {
           />
           <input
             type="url"
-            placeholder="Thumbnail URL (optional)"
+            placeholder="Thumbnail URL"
             value={formData.thumbnailUrl}
             onChange={(e) => setFormData({...formData, thumbnailUrl: e.target.value})}
           />
